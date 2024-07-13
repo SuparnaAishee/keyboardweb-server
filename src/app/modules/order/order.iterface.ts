@@ -1,4 +1,4 @@
-import { Error } from "mongoose";
+
 
 
 export type TOrder = {
@@ -6,8 +6,9 @@ export type TOrder = {
 
   quantity: number;
   productId: string;
-
-  price: number;
+mobileno?:number;
+address:string;
+  price?: number;
 };
 
 

@@ -8,24 +8,29 @@ import { TOrder } from './order.iterface';
 
 const createOrderFromDB = async (orderData: TOrder) => {
   try {
-    
-    const { email, productId, quantity } = orderData;
+    const { email, productId, quantity, mobileno, address, price } = orderData;
+
+    // Validate required fields
+    if (!email || !productId || quantity === undefined || !address) {
+      throw new Error('Invalid input: Missing required fields');
+    }
 
     const product = await Product.findById(productId);
     if (!product) {
       throw new Error('Product not found');
     }
 
+ 
     const order = await Order.create({
       email,
-
       productId: product._id.toString(),
-
-      name: product.name,
-      price: product.price,
-
+      name,
+      price: price !== undefined ? price : product.price, 
       quantity,
+      mobileno: mobileno !== undefined ? mobileno : null, 
+      address,
     });
+
     return order;
   } catch (error) {
     throw new Error('Error in creating order ');
