@@ -13,14 +13,22 @@ const InventoryValidationSchema = z.object({
 
 const ProductValidationSchema = z
   .object({
-    name: z.string().min(1, 'Name is required'),
-    description: z.string().min(1, 'Description is required'),
-    price: z.number().positive('Price must be a positive number'),
-    category: z.string().min(1, 'Category is required'),
-    tags: z.array(z.string()).min(1, 'Tags are required'),
-    variants: z.array(VariantValidationSchema).min(1, 'Variants are required'),
-    inventory: InventoryValidationSchema,
-  })
+  
+      image: z.string(),
+      name: z.string().min(1, 'Name is required'),
+      brand: z.string(),
+      description: z.string().min(1, 'Description is required'),
+      price: z.number().positive('Price must be a positive number'),
+      ratings: z.number().positive('Ratings must be a positive number'),
+      category: z.string().min(1, 'Category is required'),
+      tags: z.array(z.string()).min(1, 'Tags are required'),
+      variants: z
+        .array(VariantValidationSchema)
+        .min(1, 'Variants are required'),
+      inventory: InventoryValidationSchema,
+    })
+  
+ 
   .refine((value) => {
     const { name, description, price, category, tags, variants, inventory } =
       value;
@@ -39,6 +47,7 @@ const ProductValidationSchema = z
     }
     return true;
   });
+
 
 export {
   ProductValidationSchema,

@@ -12,11 +12,16 @@ export type TInventoryData = {
 
 //Create an interface 
 export type TProduct = {
+  
+  image?:string;
   name: string;
+  brand?:string;
   description: string;
   price: number;
+  ratings?:number;
   category: string;
   tags: string[];
   variants: TVariantData[];
   inventory: TInventoryData;
 };
+

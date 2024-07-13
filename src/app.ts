@@ -6,7 +6,7 @@ import {  notFoundHandler } from './app/middlewares/handle.error';
 import cors from "cors";
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:5173'] }));
+app.use(cors({ origin: ['http://localhost:5173']  }));
 
 //parser for json
 app.use(express.json());

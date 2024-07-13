@@ -48,17 +48,26 @@ export const ProductListService = {
 
   getProductsBySearchTerm: async (searchTerm: string) => {
     try {
-      const regex = new RegExp(searchTerm, 'i'); 
-      return await Product.find({ name: { $regex: regex } });
+      const regex = new RegExp(searchTerm, 'i');
+      return await Product.find({
+        $or: [{ name: { $regex: regex } }, { brand: { $regex: regex } }],
+      });
     } catch (error) {
       throw new Error('Error fetching products by search term from database');
+    }
+  },
+  getLatestProducts: async (limit: number) => {
+    try {
+      return await Product.find().sort({ createdAt: -1 }).limit(limit);
+    } catch (error) {
+      throw new Error('Error fetching latest products from database');
     }
   },
 };
 
 export const ProductServices = {
   createProductFromDB,
-
+ProductListService,
   getSingleProductFromDB,
   updateProductToDB,
   deleteProductFromDB,

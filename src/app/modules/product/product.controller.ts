@@ -142,12 +142,21 @@ const getProducts = async (req: Request, res: Response) => {
       message: 'Products fetched successfully!',
       data: products,
     });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
       success: false,
       message: 'Something went wrong!',
       error: err.message,
     });
+  }
+};
+export const getLatestProducts = async (req: Request, res: Response) => {
+  try {
+    const latestProducts = await ProductListService.getLatestProducts(6);
+    res.json(latestProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -159,4 +168,5 @@ export const ProductControllers = {
   updateProduct,
   deleteProduct,
   getProducts,
+  getLatestProducts
 };
