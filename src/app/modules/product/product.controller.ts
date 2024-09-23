@@ -31,10 +31,12 @@ const createProduct = async (req: Request, res: Response) => {
         data: createdProduct,
       });
     }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error:any) {
    
     if (error.name === 'ZodError') {
       const errorMessage = error.errors
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((err: any) => err.message)
         .join(', ');
       return res.status(400).json({ error: errorMessage });
@@ -96,6 +98,7 @@ const updateProduct = async (req: Request, res: Response) => {
       message: 'Product updated successfully!',
       data: updateResult,
     });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error:any) {
     console.error('Error updating product:', error);
     res.status(500).json({
@@ -115,7 +118,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: 'product is deleted sucessfully',
-      data: null,
+      data: result,
     });
   } catch (err) {
     res.status(500).json({
@@ -124,6 +127,7 @@ const deleteProduct = async (req: Request, res: Response) => {
       error: err,
     });
   }
+ 
 };
 
 //<---controller for delete product end--->
@@ -155,7 +159,8 @@ export const getLatestProducts = async (req: Request, res: Response) => {
   try {
     const latestProducts = await ProductListService.getLatestProducts(6);
     res.json(latestProducts);
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error:any) {
     res.status(500).json({ message: error.message });
   }
 };

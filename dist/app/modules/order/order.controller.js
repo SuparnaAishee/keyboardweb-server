@@ -53,6 +53,7 @@ const cerateOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             message: 'Order created successfully!',
             data: order,
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (err) {
         res.status(500).json({
@@ -83,6 +84,7 @@ const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: 'Orders fetched successfully!',
             data: orders,
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (error) {
         res.status(500).json({

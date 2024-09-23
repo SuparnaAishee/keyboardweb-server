@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductControllers = void 0;
+exports.ProductControllers = exports.getLatestProducts = void 0;
 const product_service_1 = require("./product.service");
 const product_model_1 = require("./product.model");
 const product_validation_1 = require("./product.validation");
@@ -35,10 +35,12 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 data: createdProduct,
             });
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (error) {
         if (error.name === 'ZodError') {
             const errorMessage = error.errors
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .map((err) => err.message)
                 .join(', ');
             return res.status(400).json({ error: errorMessage });
@@ -92,6 +94,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             message: 'Product updated successfully!',
             data: updateResult,
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (error) {
         console.error('Error updating product:', error);
@@ -111,7 +114,7 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(200).json({
             success: true,
             message: 'product is deleted sucessfully',
-            data: null,
+            data: result,
         });
     }
     catch (err) {
@@ -135,6 +138,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             message: 'Products fetched successfully!',
             data: products,
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (err) {
         res.status(500).json({
@@ -144,6 +148,17 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
+const getLatestProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const latestProducts = yield product_service_1.ProductListService.getLatestProducts(6);
+        res.json(latestProducts);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.getLatestProducts = getLatestProducts;
 //<---controller for get all product or serachTerm product end--->
 exports.ProductControllers = {
     createProduct,
@@ -151,4 +166,5 @@ exports.ProductControllers = {
     updateProduct,
     deleteProduct,
     getProducts,
+    getLatestProducts: exports.getLatestProducts
 };

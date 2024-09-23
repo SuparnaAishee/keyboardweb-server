@@ -15,12 +15,17 @@ const InventoryValidationSchema = zod_1.z.object({
 exports.InventoryValidationSchema = InventoryValidationSchema;
 const ProductValidationSchema = zod_1.z
     .object({
+    image: zod_1.z.string(),
     name: zod_1.z.string().min(1, 'Name is required'),
+    brand: zod_1.z.string(),
     description: zod_1.z.string().min(1, 'Description is required'),
     price: zod_1.z.number().positive('Price must be a positive number'),
+    ratings: zod_1.z.number().positive('Ratings must be a positive number'),
     category: zod_1.z.string().min(1, 'Category is required'),
     tags: zod_1.z.array(zod_1.z.string()).min(1, 'Tags are required'),
-    variants: zod_1.z.array(VariantValidationSchema).min(1, 'Variants are required'),
+    variants: zod_1.z
+        .array(VariantValidationSchema)
+        .min(1, 'Variants are required'),
     inventory: InventoryValidationSchema,
 })
     .refine((value) => {

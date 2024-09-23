@@ -14,7 +14,11 @@ const product_model_1 = require("../product/product.model");
 const order_model_1 = require("./order.model");
 const createOrderFromDB = (orderData) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, productId, quantity } = orderData;
+        const { email, productId, quantity, mobileno, address, price } = orderData;
+        // Validate required fields
+        if (!email || !productId || quantity === undefined || !address) {
+            throw new Error('Invalid input: Missing required fields');
+        }
         const product = yield product_model_1.Product.findById(productId);
         if (!product) {
             throw new Error('Product not found');
@@ -22,9 +26,11 @@ const createOrderFromDB = (orderData) => __awaiter(void 0, void 0, void 0, funct
         const order = yield order_model_1.Order.create({
             email,
             productId: product._id.toString(),
-            name: product.name,
-            price: product.price,
+            name,
+            price: price !== undefined ? price : product.price,
             quantity,
+            mobileno: mobileno !== undefined ? mobileno : null,
+            address,
         });
         return order;
     }

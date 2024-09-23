@@ -31,11 +31,12 @@ const updateProductToDB = async (
     throw err;
   }
 };
-
 const deleteProductFromDB = async (id: string) => {
   const result = await Product.deleteOne({ _id: id });
+  console.log('Deletion result:', result); // Add logging to check result
   return result;
 };
+
 
 export const ProductListService = {
   getAllProducts: async () => {

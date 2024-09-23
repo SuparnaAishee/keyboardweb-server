@@ -12,9 +12,12 @@ const InventoryDataSchema = new mongoose_1.Schema({
     inStock: { type: Boolean, required: true },
 }, { _id: false });
 const ProductSchema = new mongoose_1.Schema({
+    image: { type: String },
     name: { type: String, required: [true, 'Name is required'] },
+    brand: { type: String, required: [true, 'Brand is required'] },
     description: { type: String, required: [true, 'Description is required'] },
     price: { type: Number, required: [true, 'Price is required'] },
+    ratings: { type: Number },
     category: { type: String, required: [true, 'Category is required'] },
     tags: { type: [String], required: true },
     variants: { type: [VariantDataSchema], required: true },

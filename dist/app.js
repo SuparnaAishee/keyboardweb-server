@@ -7,7 +7,9 @@ const express_1 = __importDefault(require("express"));
 const product_route_1 = require("./app/modules/product/product.route");
 const order_route_1 = require("./app/modules/order/order.route");
 const handle_error_1 = require("./app/middlewares/handle.error");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)({ origin: ['https://keyboard-shop-web-client-app.vercel.app/'] }));
 //parser for json
 app.use(express_1.default.json());
 app.use('/api/products', product_route_1.ProductRoutes);

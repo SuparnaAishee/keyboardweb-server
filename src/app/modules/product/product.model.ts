@@ -1,15 +1,16 @@
 import { Schema, model } from 'mongoose';
 import { TInventoryData, TProduct, TVariantData } from './product.interface';
 
-//defining schema
-
+// Defining schema for variants
 const VariantDataSchema = new Schema<TVariantData>(
   {
-    type: { type: String, required: [true, 'Type is required'] },
-    value: { type: String, required: [true, 'Value is required'] },
+    type: { type: String },
+    value: { type: String },
   },
   { _id: false },
 );
+
+// Defining schema for inventory
 const InventoryDataSchema = new Schema<TInventoryData>(
   {
     quantity: { type: Number, required: [true, 'Quantity is required'] },
@@ -18,20 +19,22 @@ const InventoryDataSchema = new Schema<TInventoryData>(
   { _id: false },
 );
 
-const ProductSchema = new Schema<TProduct, TInventoryData, TVariantData>(
+// Defining Product schema
+const ProductSchema = new Schema<TProduct>(
   {
-    image:{type:String},
+    image: { type: String, required: [true, 'Image is required'] },
     name: { type: String, required: [true, 'Name is required'] },
-    brand: { type: String, required: [true, 'Brand is required'] },
+    brand: { type: String }, // Optional field
     description: { type: String, required: [true, 'Description is required'] },
     price: { type: Number, required: [true, 'Price is required'] },
-    ratings:{type:Number},
+    ratings: { type: Number }, // Optional field
     category: { type: String, required: [true, 'Category is required'] },
-    tags: { type: [String], required: true },
-    variants: { type: [VariantDataSchema], required: true },
-    inventory: { type: InventoryDataSchema, required: true },
+    tags: { type: [String] }, // Optional field
+    variants: { type: [VariantDataSchema] }, // Optional field
+    inventory: { type: InventoryDataSchema }, // Optional field
   },
   { versionKey: false },
 );
 
+// Exporting the Product model
 export const Product = model<TProduct>('Product', ProductSchema);

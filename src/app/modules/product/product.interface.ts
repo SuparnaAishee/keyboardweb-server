@@ -20,8 +20,9 @@ export type TProduct = {
   price: number;
   ratings?:number;
   category: string;
-  tags: string[];
-  variants: TVariantData[];
-  inventory: TInventoryData;
+  tags?: string[];
+  variants?: TVariantData[];
+  inventory?: TInventoryData;
+  quantity?:number;
 };
 

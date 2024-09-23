@@ -46,15 +46,26 @@ exports.ProductListService = {
     getProductsBySearchTerm: (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const regex = new RegExp(searchTerm, 'i');
-            return yield product_model_1.Product.find({ name: { $regex: regex } });
+            return yield product_model_1.Product.find({
+                $or: [{ name: { $regex: regex } }, { brand: { $regex: regex } }],
+            });
         }
         catch (error) {
             throw new Error('Error fetching products by search term from database');
         }
     }),
+    getLatestProducts: (limit) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            return yield product_model_1.Product.find().sort({ createdAt: -1 }).limit(limit);
+        }
+        catch (error) {
+            throw new Error('Error fetching latest products from database');
+        }
+    }),
 };
 exports.ProductServices = {
     createProductFromDB,
+    ProductListService: exports.ProductListService,
     getSingleProductFromDB,
     updateProductToDB,
     deleteProductFromDB,
